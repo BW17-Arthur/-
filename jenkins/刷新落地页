@@ -1,0 +1,18 @@
+#FTP_LAND_PAGE=/home/ops/ftpdata/landcode
+LOCAl_LAND_PAGE=/home/storage
+REMOTE_LAND_PAGE=/landpage
+
+
+rm -rf $LOCAl_LAND_PAGE/$Group/$DIRNAME
+
+echo "====开始同步落地页文件======="
+rsync -vazu --progress --delete -e ssh ops@ftp:/home/ops/ftpdata/$Group/* $LOCAl_LAND_PAGE/$Group/
+
+
+echo "==========落地页nginx配置文件准备完毕=============="
+echo "====开始拷贝落地页========"
+#ansible landpage -m copy -a "src=$LOCAl_LAND_PAGE/$Group/$DIRNAME dest=$REMOTE_LAND_PAGE/"
+ansible-playbook /etc/ansible/roles/rsync/deploy.yml -e "DIRNAME=$Group/$DIRNAME Group=$Group"
+
+echo "====重新载入落地页nginx配置文件========"
+ansible landpage -a "systemctl reload nginx"
