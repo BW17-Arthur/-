@@ -1,0 +1,10 @@
+---
+- hosts: landpage
+  gather_facts: no
+  vars:
+      ansible_host_key_checking: false
+
+  tasks:
+    - name: template rsync to file
+      synchronize: src=/home/ssl/{{ DM }}_chain.crt  dest=/etc/ssl/certs/ archive=yes recursive=yes rsync_opts="--delete-before"
+      register: rsync_file_out
