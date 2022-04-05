@@ -1,0 +1,12 @@
+REMOTE_LAND_PAGE=/landpage
+REMOTE_NGINX_CONF=/etc/nginx/conf.d
+SSL_DM=/etc/ssl/certs
+
+echo "====开始删除落地页nginx配置文件========"
+ansible landpage -a "rm -f $REMOTE_NGINX_CONF/$Group/$DM.conf"
+ansible landpage -a "rm -f $SSL_DM/$DM\_chain.crt"
+ansible landpage -a "rm -f $SSL_DM/$DM\_key.key"
+echo "====重新载入落地页nginx配置文件========"
+ansible landpage -a "sudo systemctl reload nginx"
+
+echo "落地页删除完毕，请在高防IP上手动去除域名之后，在DNS解析中去除CNAME。"
