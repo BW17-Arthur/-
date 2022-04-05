@@ -1,0 +1,35 @@
+
+#FTP_LAND_PAGE=/home/ops/ftpdata/landcode
+LOCAl_LAND_PAGE=/home/storage
+LOCAL_NGINX_CONF=/home/nginx_conf
+LOCAL_SSL=/home/ssl
+TEMPLATE_CONF=/home/template_conf
+REMOTE_LAND_PAGE=/landpage
+REMOTE_NGINX_CONF=/etc/nginx/conf.d
+REMOTE_SSL=/etc/ssl/certs/
+
+
+rm -rf $LOCAl_LAND_PAGE/$Group/$DIRNAME
+rm -rf $LOCAL_SSL/*
+echo "====开始同步落地页文件======="
+rsync -vazu --progress --delete -e ssh ops@ftp:/home/ops/ftpdata/$Group/* $LOCAl_LAND_PAGE/$Group/
+rsync -vazu --progress --delete -e ssh ops@ftp:/home/ops/ftpdata/ssl/$ZIPNAME.zip  $LOCAL_SSL
+unzip -o $LOCAL_SSL/$ZIPNAME.zip -d $LOCAL_SSL
+echo "=======开始准备落地页nginx配置文件======"
+cp -f $TEMPLATE_CONF/ssl.example.com.conf $TEMPLATE_CONF/$DM.conf
+sed -i "s#example.com#$DM#g" $TEMPLATE_CONF/$DM.conf
+sed -i "s#example#$Group/$DIRNAME#g" $TEMPLATE_CONF/$DM.conf
+mv -f $TEMPLATE_CONF/$DM.conf $LOCAL_NGINX_CONF/$Group/
+cat $LOCAL_NGINX_CONF/$Group/$DM.conf
+
+echo "==========落地页nginx配置文件准备完毕=============="
+echo "====开始拷贝落地页========"
+#ansible landpage -m copy -a "src=$LOCAl_LAND_PAGE/$Group/$DIRNAME dest=$REMOTE_LAND_PAGE/"
+ansible-playbook /etc/ansible/roles/rsync/deploy.yml -e "DIRNAME=$Group/$DIRNAME Group=$Group"
+ansible-playbook /etc/ansible/roles/rsync/ssl.yml -e "DM=$DM"
+ansible-playbook /etc/ansible/roles/rsync/key.yml -e "DM=$DM"
+
+echo "====开始拷贝落地页nginx配置文件========"
+ansible landpage -m copy -a "src=$LOCAL_NGINX_CONF/$Group/$DM.conf dest=$REMOTE_NGINX_CONF/$Group/"
+echo "====重新载入落地页nginx配置文件========"
+ansible landpage -a "systemctl reload nginx"
