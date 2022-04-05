@@ -1,4 +1,3 @@
-
 #FTP_LAND_PAGE=/home/ops/ftpdata/landcode
 LOCAl_LAND_PAGE=/home/storage
 LOCAL_NGINX_CONF=/home/nginx_conf
