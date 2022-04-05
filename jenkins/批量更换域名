@@ -1,0 +1,1 @@
+ansible-playbook /etc/ansible/roles/rsync/plth.yml -e "OUTDM=$OUTDM NEWDM=$NEWDM Group=$Group"
