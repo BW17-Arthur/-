@@ -1,0 +1,16 @@
+---
+- hosts: landpage
+  gather_facts: no
+  vars:
+    ansible_host_key_checking: false
+  tasks:
+    - name: change domain name
+      shell: grep {{ OUTDM }} -rl /landpage/{{ Group }} | xargs sed -i "s#{{ OUTDM }}#{{ NEWDM }}#g"
+
+- hosts: 192.168.21.6
+  gather_facts: no
+  vars:
+    ansible_host_key_checking: false
+  tasks:
+    - name: change ftp domain name
+      shell: grep {{ OUTDM }} -rl /home/ops/ftpdata/{{ Group }} | xargs sed -i "s#{{ OUTDM }}#{{ NEWDM }}#g"
