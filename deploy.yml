@@ -1,0 +1,20 @@
+---
+- hosts: landpage
+  gather_facts: no
+  vars:
+      ansible_host_key_checking: false
+
+  tasks:
+    - name: template rsync to file
+      synchronize: src=/home/storage/{{ DIRNAME }} dest=/landpage/{{ Group }} archive=yes recursive=yes rsync_opts="--delete-before"
+      register: rsync_file_out
+
+    - name: show copy file_list
+      debug: var=rsync_file_out verbosity=0
+
+    - name: show cat index
+      shell: ls -l /landpage/{{ DIRNAME }}
+      register: cat_rsync_file
+
+    - name: show cat index log
+      debug: var=cat_rsync_file verbosity=0
