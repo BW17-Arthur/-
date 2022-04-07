@@ -1,0 +1,186 @@
+
+html,
+body,
+div,
+ul,
+li,
+ol,
+dl,
+dd,
+dt,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+fieldset,
+legend,
+img,
+input,
+header,
+nav,
+article,
+section,
+footer,
+span,
+button,
+textarea,
+th,
+td,
+a,
+del {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+label {
+  font-weight: 700;
+}
+ul,
+li,
+ol,
+dl,
+dt {
+  list-style: none;
+}
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+
+
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}
+
+.clearfix::after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: ' ';
+    clear: both;
+    height: 0;
+}
+
+
+
+.firm_box{
+  padding-top: 10px;
+  list-style: none;
+  width: 1020px;
+  margin: 0 auto;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.firm_box li{
+    margin-bottom: 10px;
+}
+.firm_box li img{
+  width:500px;
+}
+.firm_box .fill_all{
+  width:100%;
+}
+.firm_box .fill_all img{
+  width:100%;
+}
+
+.chatClient{
+  width: 80px;
+  height: 80px;
+  position: fixed;
+  right: 0;
+  top: 25%;
+  margin-top:-40px ;
+  background-color: #fff;
+  box-shadow: 0 0 20px 0 rgba(90, 121, 150, 0.32);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  text-align: center;
+}
+.chatClient a{
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 12px;
+  color: #48acff;
+  text-decoration: none;
+}
+
+.chatClient a:hover {
+  text-decoration: underline;
+}
+
+.chatImg{
+  position: relative;
+  width: 27px;
+  height: 27px;
+  margin: 12px auto 10px;
+}
+
+.chatClient:hover .default {
+  opacity: 0;
+}
+
+.chatClient:hover .hover {
+  opacity: 1;
+}
+
+.default {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("https://web.maoerfei.cn/images/img/icon-customer-support.png") no-repeat center center;
+  background-size: contain;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("https://web.maoerfei.cn/images/img/icon-customer-support-hover.png") no-repeat center center;
+  background-size: contain;
+  z-index: 999;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
